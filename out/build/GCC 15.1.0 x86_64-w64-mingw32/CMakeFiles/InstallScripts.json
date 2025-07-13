@@ -1,0 +1,13 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/22379/Desktop/algorithm/out/build/GCC 15.1.0 x86_64-w64-mingw32/cmake_install.cmake",
+		"C:/Users/22379/Desktop/algorithm/out/build/GCC 15.1.0 x86_64-w64-mingw32/src/cmake_install.cmake",
+		"C:/Users/22379/Desktop/algorithm/out/build/GCC 15.1.0 x86_64-w64-mingw32/third_party/googletest/cmake_install.cmake",
+		"C:/Users/22379/Desktop/algorithm/out/build/GCC 15.1.0 x86_64-w64-mingw32/third_party/googletest/googlemock/cmake_install.cmake",
+		"C:/Users/22379/Desktop/algorithm/out/build/GCC 15.1.0 x86_64-w64-mingw32/third_party/googletest/googletest/cmake_install.cmake",
+		"C:/Users/22379/Desktop/algorithm/out/build/GCC 15.1.0 x86_64-w64-mingw32/test/cmake_install.cmake",
+		"C:/Users/22379/Desktop/algorithm/out/build/GCC 15.1.0 x86_64-w64-mingw32/demo/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
