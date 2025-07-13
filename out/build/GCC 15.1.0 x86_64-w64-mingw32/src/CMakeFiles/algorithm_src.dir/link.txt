@@ -1,2 +1,0 @@
-C:\env\mingw64\bin\ar.exe qc C:\Users\22379\Desktop\algorithm\lib\libalgorithm_src.a CMakeFiles/algorithm_src.dir/hello/hello.cpp.obj
-C:\env\mingw64\bin\ranlib.exe C:\Users\22379\Desktop\algorithm\lib\libalgorithm_src.a

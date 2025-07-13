@@ -1,2 +1,0 @@
-C:\env\mingw64\bin\ar.exe qc libalgorithm.a CMakeFiles/algorithm.dir/main.cpp.obj
-C:\env\mingw64\bin\ranlib.exe libalgorithm.a

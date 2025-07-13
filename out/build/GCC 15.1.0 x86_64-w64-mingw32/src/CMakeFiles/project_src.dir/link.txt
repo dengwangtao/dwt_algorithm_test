@@ -1,2 +1,0 @@
-C:\env\mingw64\bin\ar.exe qc libproject_src.a CMakeFiles/project_src.dir/hello/hello.cpp.obj CMakeFiles/project_src.dir/main.cpp.obj
-C:\env\mingw64\bin\ranlib.exe libproject_src.a
