@@ -2,21 +2,20 @@
 #include <unordered_map>
 
 
-template<typename T, typename Cmp = std::less<T>>
+template<typename T, typename Cmp = std::less<T>, typename Hasher=std::hash<T>>
 class UnionFind
 {
-    // 静态断言T为朴素类型
-    static_assert(std::is_fundamental<T>::value, "T must be a fundamental type");
-
 public:
-    UnionFind(): cmp_(Cmp()) {}
-    UnionFind(const Cmp& cmp): cmp_(cmp) {}
+    UnionFind(): cmp_(Cmp()), hasher_(Hasher()) {}
+    UnionFind(const Cmp& cmp): cmp_(cmp), hasher_(Hasher()) {}
+    UnionFind(const Hasher& hasher): cmp_(Cmp()), hasher_(hasher) {}
+    UnionFind(const Cmp& cmp, const Hasher& hasher): cmp_(cmp), hasher_(hasher) {}
 
     /**
      * 找到value所在的集合的根节点
      * @param value 待查找的元素
      */
-    T Find(T value)
+    const T& Find(const T& value)
     {
         if (nodes_.find(value) == nodes_.end())
         {
@@ -30,7 +29,7 @@ public:
         return nodes_[value];
     }
 
-    void Union(T value1, T value2)
+    void Union(const T& value1, const T& value2)
     {
         if (nodes_.find(value1) == nodes_.end())
         {
@@ -41,8 +40,8 @@ public:
             nodes_[value2] = value2;
         }
 
-        T root1 = Find(value1);
-        T root2 = Find(value2);
+        const T& root1 = Find(value1);
+        const T& root2 = Find(value2);
         if (root1 != root2)
         {
             if (cmp_(root1, root2))
@@ -56,12 +55,13 @@ public:
         }
     }
 
-    bool IsConnected(T value1, T value2)
+    bool IsConnected(const T& value1, const T& value2)
     {
         return Find(value1) == Find(value2);
     }
 
 private:
-    std::unordered_map<T, T> nodes_; // {value, parent}
+    std::unordered_map<T, T, Hasher> nodes_; // {value, parent}
     Cmp cmp_;
+    Hasher hasher_;
 };

@@ -88,3 +88,70 @@ TEST(UnionFindTest, Test_UF_4)
     EXPECT_EQ(uf.Find(2), 111);
     EXPECT_EQ(uf.Find(21), 111);
 }
+
+
+TEST(UnionFindTest, Test_UF_5)
+{
+    struct Node
+    {
+        int value1 = 0;
+        int value2 = 0;
+        int value3 = 0;
+        bool operator<(const Node& other) const
+        {
+            return std::tie(value1, value2, value3) < std::tie(other.value1, other.value2, other.value3);
+        }
+        bool operator==(const Node& other) const
+        {
+            return std::tie(value1, value2, value3) == std::tie(other.value1, other.value2, other.value3);
+        }
+        bool operator!=(const Node& other) const
+        {
+            return !(*this == other);
+        }
+    };
+    struct NodeHash
+    {
+        size_t operator()(const Node& node) const
+        {
+            return std::hash<int>()(node.value1) ^ std::hash<int>()(node.value2) ^ std::hash<int>()(node.value3);
+        }
+    };
+
+    UnionFind<Node, std::less<Node>, NodeHash> uf;
+
+    Node node1 = {
+        .value1 = 1,
+        .value2 = 2,
+        .value3 = 2
+    };
+
+    Node node2 = {
+        .value1 = 1,
+        .value2 = 2,
+        .value3 = 3
+    };
+
+    Node node3 = {
+        .value1 = 1,
+        .value2 = 2,
+        .value3 = 4
+    };
+
+    Node node4 = {
+            .value1 = 2,
+            .value2 = -1,
+            .value3 = 3
+        };
+
+
+
+    uf.Union(node1, node2);
+    uf.Union(node1, node3);
+    uf.Union(node2, node4);
+
+    EXPECT_EQ(uf.Find(node1), node1);
+    EXPECT_EQ(uf.Find(node2), node1);
+    EXPECT_EQ(uf.Find(node3), node1);
+    EXPECT_EQ(uf.Find(node4), node1);
+}
