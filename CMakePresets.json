@@ -13,6 +13,41 @@
                 "CMAKE_CXX_COMPILER": "C:/env/mingw64/bin/g++.exe",
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "msvc",
+            "displayName": "Visual Studio Community 2022 Release - x86_amd64",
+            "description": "将编译器用于 Visual Studio 17 2022 (x86_x64 体系结构)",
+            "generator": "Visual Studio 17 2022",
+            "toolset": "host=x86",
+            "architecture": "x64",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            }
+        },
+        {
+            "name": "GCC 15.1.0 x86_64-w64-mingw32",
+            "displayName": "GCC 15.1.0 x86_64-w64-mingw32",
+            "description": "正在使用编译器: C = c:\\env\\mingw64\\bin\\gcc.exe, CXX = c:\\env\\mingw64\\bin\\g++.exe",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "c:/env/mingw64/bin/gcc.exe",
+                "CMAKE_CXX_COMPILER": "c:/env/mingw64/bin/g++.exe",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "msvc-debug",
+            "displayName": "Visual Studio Community 2022 Release - x86_amd64 - Debug",
+            "configurePreset": "msvc",
+            "configuration": "Debug"
         }
     ]
 }
