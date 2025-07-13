@@ -71,3 +71,20 @@ TEST(UnionFindTest, Test_UF_3)
     uf.Union(10000000000000000000ull, 1);
     EXPECT_EQ(uf.Find(1), 10000000000000000001ull);
 }
+
+
+TEST(UnionFindTest, Test_UF_4)
+{
+    // 对比字符串的大小
+    auto cmp = [](int a, int b)
+    {
+        return std::to_string(a) < std::to_string(b);
+    };
+    UnionFind<int, decltype(cmp)> uf(cmp);
+
+    uf.Union(2, 21);
+    uf.Union(111, 21);
+
+    EXPECT_EQ(uf.Find(2), 111);
+    EXPECT_EQ(uf.Find(21), 111);
+}

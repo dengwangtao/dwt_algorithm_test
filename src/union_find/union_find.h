@@ -9,6 +9,9 @@ class UnionFind
     static_assert(std::is_fundamental<T>::value, "T must be a fundamental type");
 
 public:
+    UnionFind(): cmp_(Cmp()) {}
+    UnionFind(const Cmp& cmp): cmp_(cmp) {}
+
     /**
      * 找到value所在的集合的根节点
      * @param value 待查找的元素
@@ -42,7 +45,7 @@ public:
         T root2 = Find(value2);
         if (root1 != root2)
         {
-            if (Cmp()(root1, root2))
+            if (cmp_(root1, root2))
             {
                 nodes_[root2] = root1;
             }
@@ -60,4 +63,5 @@ public:
 
 private:
     std::unordered_map<T, T> nodes_; // {value, parent}
+    Cmp cmp_;
 };
