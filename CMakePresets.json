@@ -48,6 +48,12 @@
             "displayName": "Visual Studio Community 2022 Release - x86_amd64 - Debug",
             "configurePreset": "msvc",
             "configuration": "Debug"
+        },
+        {
+            "name": "tx_mingw64",
+            "description": "",
+            "displayName": "",
+            "configurePreset": "GCC 15.1.0 x86_64-w64-mingw32 2"
         }
     ]
 }

@@ -50,7 +50,7 @@ TEST(UnionFindTest, Test_UF_3)
     uf.Union(4, 5);
     uf.Union(10000000000000000000ull, 10000000000000000001ull);
 
-    GTEST_LOG_(INFO) << "UnionFindTest.Test_UF_2: "
+    GTEST_LOG_(INFO) << "UnionFindTest.Test_UF_3: "
         << uf.Find(1) << " "
         << uf.Find(2) << " "
         << uf.Find(3) << " "
