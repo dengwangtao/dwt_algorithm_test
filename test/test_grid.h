@@ -2,7 +2,7 @@
 #include "grid/package_grid.h"
 
 // Test for GridKey operations
-TEST(GridTest, GridKey)
+TEST(GridTest, GridKeyTest)
 {
     // 测试构造函数和操作符
     GridKey key1(10, 20);
@@ -32,7 +32,7 @@ TEST(GridTest, GridKey)
 }
 
 // Test for GridRect validity and attributes
-TEST(GridTest, GridRect)
+TEST(GridTest, GridRectTest)
 {
     GridKey topLeft(0, 0);
     GridRect rect(topLeft, 2, 3);
@@ -86,7 +86,7 @@ TEST(GridTest, PackageGridForLoop)
 }
 
 // Test for PackageGrid basic operations
-TEST(GridTest, PackageGrid)
+TEST(GridTest, PackageGridTest)
 {
     PackageGrid grid;
 
@@ -227,5 +227,6 @@ TEST(GridTest, FillPackageGridRect2)
             std::cout << "[ERROR] " << height << " " << width << " can't put " << global_rect << std::endl;
         }
     }
+}
 
    
