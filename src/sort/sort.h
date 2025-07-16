@@ -1,11 +1,10 @@
 #pragma once
-
-#include <unordered_map>
-#include <functional>
+#include <type_traits>
 
 #include "sort/bubble.h"
 #include "sort/insert.h"
 #include "sort/select.h"
+#include "sort/quick.h"
 
 
 namespace Sort
@@ -46,5 +45,7 @@ SORT_DISPATCH(SORT_BUBBLE, Bubble);
 SORT_DISPATCH(SORT_INSERT, Insert);
 
 SORT_DISPATCH(SORT_SELECT, Select);
+
+SORT_DISPATCH(SORT_QUICK, Quick);
 
 }

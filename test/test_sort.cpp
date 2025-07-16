@@ -5,6 +5,9 @@
 #include "sort/sort.h"
 
 
+constexpr std::size_t TEST_ARR_LEN = 100;
+
+
 static std::vector<int> MakeRandomVector(int size)
 {
     std::vector<int> v;
@@ -24,7 +27,9 @@ static std::vector<int> SortedVector(const std::vector<int>& v)
     return sorted;
 }
 
-#define RV(v) std::vector<int> v = MakeRandomVector(20)
+// random vector
+#define RV(v) std::vector<int> v = MakeRandomVector(TEST_ARR_LEN)
+// sorted vector
 #define SV(v) SortedVector(v)
 
 
@@ -51,5 +56,12 @@ TEST(SortTest, select)
 {
     RV(v);
     Sort::sort<Sort::SORT_SELECT>(v.data(), v.size());
+    EXPECT_EQ(v, SV(v));
+}
+
+TEST(SortTest, quick)
+{
+    RV(v);
+    Sort::sort<Sort::SORT_QUICK>(v.data(), v.size());
     EXPECT_EQ(v, SV(v));
 }
