@@ -65,3 +65,10 @@ TEST(SortTest, quick)
     Sort::sort<Sort::SORT_QUICK>(v.data(), v.size());
     EXPECT_EQ(v, SV(v));
 }
+
+TEST(SortTest, merge)
+{
+    RV(v);
+    Sort::sort<Sort::SORT_MERGE>(v.data(), v.size());
+    EXPECT_EQ(v, SV(v));
+}

@@ -5,7 +5,7 @@
 #include "sort/insert.h"
 #include "sort/select.h"
 #include "sort/quick.h"
-
+#include "sort/merge.h"
 
 namespace Sort
 {
@@ -47,5 +47,7 @@ SORT_DISPATCH(SORT_INSERT, Insert);
 SORT_DISPATCH(SORT_SELECT, Select);
 
 SORT_DISPATCH(SORT_QUICK, Quick);
+
+SORT_DISPATCH(SORT_MERGE, Merge);
 
 }
