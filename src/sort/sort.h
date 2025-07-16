@@ -5,6 +5,7 @@
 
 #include "sort/bubble.h"
 #include "sort/insert.h"
+#include "sort/select.h"
 
 
 namespace Sort
@@ -43,5 +44,7 @@ sort(T* array, std::size_t length) \
 SORT_DISPATCH(SORT_BUBBLE, Bubble);
 
 SORT_DISPATCH(SORT_INSERT, Insert);
+
+SORT_DISPATCH(SORT_SELECT, Select);
 
 }
