@@ -46,8 +46,8 @@ class Expression : public Resource<ReturnType<Func, Args...>>
 {
 public:
     using value_type = ReturnType<Func, Args...>;
-
-    using Resource<value_type>::Resource;
+    using SuperClass = Resource<value_type>;
+    using SuperClass::Resource;
 
     template<typename F, typename... As>
     Expression(F&& f, As&&... args)
@@ -55,9 +55,12 @@ public:
         , func_(std::forward<F>(f))
         , args_(std::forward<As>(args)...)
     {
+        this->subscribe(std::forward<Args>(args)...);
+        
         evaluate();
     }
 
+private:
 
     void evaluate()
     {
@@ -69,11 +72,23 @@ public:
         this->updateValue(result);
     }
 
+    void valueChanged() override
+    {
+        this->evaluate();
+        this->notify();
+    }
+
 
 private:
     Func func_;
     std::tuple<std::reference_wrapper<Args>...> args_;
+
+    // 友元声明
+    template<typename OS, typename T, typename... As>
+    friend OS& operator<<(OS& os, const Expression<T, As...>& expr);
 };
+
+
 
 template<typename Type>
 class Expression<Type> : public Resource<Type>
@@ -84,6 +99,33 @@ public:
     using Resource<value_type>::Resource;
 
 };
+
+
+
+template<typename OS, typename T, typename... Args>
+OS& operator<<(OS& os, const Expression<T, Args...>& expr)
+{
+    os  << "Expr {" << "addr: " << (void*)&expr << " value=" << expr.getValue()
+        << " dependencies: ";
+
+    // 检测是否有成员 args_（编译期）
+    if constexpr (requires { expr.args_; })
+    {
+        os << "[";
+        [&]<std::size_t... I>(std::index_sequence<I...>)
+        {
+            (void)((os << (I == 0 ? "" : ", ") << std::get<I>(expr.args_).get()),...);
+        } (std::make_index_sequence<std::tuple_size_v<decltype(expr.args_)>>{});
+        os << "]";
+    }
+    else
+    {
+        os << "None";
+    }
+    os << "}";
+
+    return os;
+}
 
 
 } // namespace reactions

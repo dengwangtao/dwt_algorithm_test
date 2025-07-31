@@ -9,8 +9,9 @@ template<typename Type, typename... Args>
 class DataSource : public Expression<Type, Args...>
 {
 public:
-
-    using Expression<Type, Args...>::Expression;
+    using SuperClass = Expression<Type, Args...>;
+    using SuperClass::Expression;
+    using value_type = SuperClass::value_type;
 
 
     auto get() const
@@ -18,6 +19,14 @@ public:
         return this->getValue();
     }
 
+
+    template<typename T>
+        requires std::is_convertible_v<T, Type>
+    void value(T &&value)
+    {
+        this->updateValue(std::forward<T>(value));
+        this->notify();
+    }
 
 };
 

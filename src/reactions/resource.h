@@ -2,11 +2,13 @@
 
 #include <memory>
 
+#include "reactions/observer_node.h"
+
 namespace reactions
 {
 
 template<typename Type>
-class Resource
+class Resource : public ObserverNode
 {
 public:
     using value_type = Type;
@@ -20,7 +22,7 @@ public:
 
     Resource(const Resource &other) = delete;
     Resource& operator=(const Resource &other) = delete;
-    
+
 
     value_type &getValue() const
     {
@@ -40,7 +42,6 @@ public:
         }
         *value_ = std::forward<T>(value);
     }
-
 
 private:
 

@@ -26,4 +26,14 @@ TEST(TestReaction, reaction)
 
     ASSERT_FLOAT_EQ(clc1.get(), 4.14);
     EXPECT_EQ(clc2.get(), "14.140000");
+
+    a.value(10);
+    GTEST_LOG_(INFO) << "a.update(10)";
+    GTEST_LOG_(INFO) << a;
+    GTEST_LOG_(INFO) << b;
+    GTEST_LOG_(INFO) << clc1;
+    GTEST_LOG_(INFO) << clc2;
+    
+    ASSERT_FLOAT_EQ(clc1.get(), 13.14);
+    EXPECT_EQ(clc2.get(), "1013.140000");
 }
