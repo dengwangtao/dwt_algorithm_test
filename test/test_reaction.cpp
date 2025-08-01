@@ -54,6 +54,69 @@ TEST(TestReaction, reaction)
 
 
 
+TEST(TestReaction, reaction_copy)
+{
+    auto a = reactions::var(1);
+    auto b = reactions::var(3.14);
+
+    auto clc1 = reactions::calc(
+        [](auto p1, auto p2) { return p1 + p2; },
+        a, b
+    );
+
+    auto clc2 = reactions::calc(
+        [](auto p1, auto p2) { return std::to_string(p1) + std::to_string(p2); },
+        a, clc1
+    );
+
+    EXPECT_EQ(clc2.get(), "14.140000");
+
+    auto clc3 = clc2;
+    EXPECT_EQ(clc3.get(), "14.140000");
+
+    a.value(2);
+    EXPECT_EQ(clc2.get(), "25.140000");
+    EXPECT_EQ(clc3.get(), "25.140000");
+}
+
+
+
+TEST(TestReaction, reaction_move)
+{
+    auto a = reactions::var(1);
+    auto b = reactions::var(3.14);
+
+    auto clc1 = reactions::calc(
+        [](auto p1, auto p2) { return p1 + p2; },
+        a, b
+    );
+
+    auto clc2 = reactions::calc(
+        [](auto p1, auto p2) { return std::to_string(p1) + std::to_string(p2); },
+        a, clc1
+    );
+
+    EXPECT_EQ(clc2.get(), "14.140000");
+
+    auto clc3 = std::move(clc2);
+
+    EXPECT_FALSE(static_cast<bool>(clc2));
+
+    try
+    {
+        EXPECT_EQ(clc2.get(), "");
+    }
+    catch (const std::exception& e)
+    {
+        EXPECT_STREQ(e.what(), "react is expired");
+    }
+    EXPECT_EQ(clc3.get(), "14.140000");
+
+    a.value(2);
+    EXPECT_EQ(clc3.get(), "25.140000");
+}
+
+
 
 struct ProcessedData {
     std::string info;
