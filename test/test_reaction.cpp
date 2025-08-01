@@ -131,7 +131,32 @@ TEST(TestReaction, reaction_const)
     a.value(2);
     ASSERT_FLOAT_EQ(ds.get(), 5.14);
 
-    b.value(4.14);
+    // b.value(4.14);
+}
+
+
+TEST(TestReaction, reaction_action)
+{
+    auto a = reactions::var(1);
+    auto b = reactions::var(3.14);
+
+    auto ds = reactions::calc(
+        [](auto p1, auto p2) { return p1 + p2; },
+        a, b
+    );
+
+    auto ac = reactions::action(
+        [&](auto p1, auto p2) { GTEST_LOG_(INFO) << p1 << " " << p2 << " changed"; },
+        a, b
+    );
+
+    for (int i = 0; i < 10; ++i)
+    {
+        a.value(i);
+        b.value(i * 3.14);
+    }
+
+    // auto v = ac.get();
 }
 
 

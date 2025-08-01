@@ -127,13 +127,15 @@ public:
         return !impl_.expired();
     }
 
-
     auto get() const
+        requires (IsDataReactConcept<ReactType>)
     {
         return getImpl()->get();
     }
 
+        
     void value(auto&& value)
+        requires (IsDataReactConcept<ReactType>)
     {
         getImpl()->value(std::forward<decltype(value)>(value));
     }
@@ -187,6 +189,13 @@ auto calc(Func&& func, Args&&... args)
     ObserverGraph::Instance().addNode(impl_ptr);
 
     return React(impl_ptr);
+}
+
+
+template<typename Func, typename... Args>
+auto action(Func&& func, Args&&... args)
+{
+    return calc(std::forward<Func>(func), std::forward<Args>(args)...);
 }
 
 

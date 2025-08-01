@@ -49,4 +49,16 @@ private:
 };
 
 
+template<>
+class Resource<void> : public ObserverNode
+{
+public:
+
+    Resource() = default;
+    Resource(const Resource &other) = delete;
+    Resource& operator=(const Resource &other) = delete;
+};
+
+
+
 } // namespace reactions

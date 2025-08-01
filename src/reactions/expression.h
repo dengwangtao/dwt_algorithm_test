@@ -38,12 +38,26 @@ private:
 
     void evaluate()
     {
-        auto result = [&]<std::size_t... I>(std::index_sequence<I...>)
-        {
-            return std::invoke(func_, std::get<I>(args_).get().get()...);
-        } (std::make_index_sequence<std::tuple_size_v<decltype(args_)>>{});
 
-        this->updateValue(result);
+        // 判断value_type是否为void
+        // IsVoidConcept
+        if constexpr (IsVoidConcept<value_type>)
+        {
+            [&]<std::size_t... I>(std::index_sequence<I...>)
+            {
+                std::invoke(func_, std::get<I>(args_).get().get()...);
+            } (std::make_index_sequence<std::tuple_size_v<decltype(args_)>>{});
+            return;
+        }
+        else
+        {
+            auto result = [&]<std::size_t... I>(std::index_sequence<I...>)
+            {
+                return std::invoke(func_, std::get<I>(args_).get().get()...);
+            } (std::make_index_sequence<std::tuple_size_v<decltype(args_)>>{});
+
+            this->updateValue(result);
+        }
     }
 
     void valueChanged() override
