@@ -13,6 +13,8 @@ public:
     using SuperClass::Expression;
     using value_type = SuperClass::value_type;
 
+    using ExprType = SuperClass::ExprType;
+
 
     auto get() const
     {
@@ -21,7 +23,7 @@ public:
 
 
     template<typename T>
-        requires std::is_convertible_v<T, Type>
+        requires CanConvertConcept<T, Type> && IsVarExprConcept<ExprType>
     void value(T &&value)
     {
         this->updateValue(std::forward<T>(value));

@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "reactions/concept.h"
+
 
 namespace reactions
 {

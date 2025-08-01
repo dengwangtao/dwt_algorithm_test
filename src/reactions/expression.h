@@ -14,6 +14,13 @@ template<typename T, typename... Args>
 class DataSource;
 
 
+struct VarExprTag {};
+struct CalcExprTag {};
+
+
+
+
+
 template<typename T>
 struct ExpressionTraits
 {
@@ -48,6 +55,8 @@ public:
     using value_type = ReturnType<Func, Args...>;
     using SuperClass = Resource<value_type>;
     using SuperClass::Resource;
+
+    using ExprType = CalcExprTag;
 
     template<typename F, typename... As>
     Expression(F&& f, As&&... args)
@@ -97,6 +106,8 @@ public:
     using value_type = Type;
     
     using Resource<value_type>::Resource;
+
+    using ExprType = VarExprTag;
 
 };
 

@@ -21,6 +21,7 @@ TEST(TestReaction, reaction)
         a, clc1
     );
 
+    auto x1 = clc1.get();
     auto x = clc2.get();
 
 
@@ -29,11 +30,21 @@ TEST(TestReaction, reaction)
 
     a.value(10);
     GTEST_LOG_(INFO) << "a.update(10)";
-    GTEST_LOG_(INFO) << a;
-    GTEST_LOG_(INFO) << b;
-    GTEST_LOG_(INFO) << clc1;
-    GTEST_LOG_(INFO) << clc2;
+    // GTEST_LOG_(INFO) << a;
+    // GTEST_LOG_(INFO) << b;
+    // GTEST_LOG_(INFO) << clc1;
+    // GTEST_LOG_(INFO) << clc2;
     
     ASSERT_FLOAT_EQ(clc1.get(), 13.14);
     EXPECT_EQ(clc2.get(), "1013.140000");
+
+    b.value(20);
+    GTEST_LOG_(INFO) << "b.update(20)";
+    // GTEST_LOG_(INFO) << a;
+    // GTEST_LOG_(INFO) << b;
+    // GTEST_LOG_(INFO) << clc1;
+    // GTEST_LOG_(INFO) << clc2;
+
+    ASSERT_FLOAT_EQ(clc1.get(), 30);
+    EXPECT_EQ(clc2.get(), "1030.000000");
 }
