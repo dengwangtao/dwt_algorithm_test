@@ -11,7 +11,10 @@ namespace reactions
 
 // 前向声明
 template<typename T, typename... Args>
-class DataSource;
+class ReactImpl;
+
+template<typename ReactType>
+class React;
 
 
 struct VarExprTag {};
@@ -29,19 +32,19 @@ struct ExpressionTraits
 
 // 偏特化
 template<typename T>
-struct ExpressionTraits<DataSource<T>>
+struct ExpressionTraits<React<ReactImpl<T>>>
 {
     using type = T;
 };
 
 template<typename Func, typename... Args>
-struct ExpressionTraits<DataSource<Func, Args ...>>
+struct ExpressionTraits<React<ReactImpl<Func, Args ...>>>
 {
     using type = std::invoke_result_t<Func, typename ExpressionTraits<Args>::type...>;
 };
 
 template<typename T, typename... Args>
-using ReturnType = typename ExpressionTraits<DataSource<T, Args...>>::type;
+using ReturnType = typename ExpressionTraits<React<ReactImpl<T, Args...>>>::type;
 
 
 

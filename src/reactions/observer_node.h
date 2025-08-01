@@ -2,6 +2,7 @@
 
 
 #include <vector>
+#include <memory>
 
 #include "reactions/concept.h"
 
@@ -11,7 +12,7 @@ namespace reactions
 
 
 
-class ObserverNode
+class ObserverNode : public std::enable_shared_from_this<ObserverNode>
 {
 public:
     virtual ~ObserverNode() = default;
@@ -30,7 +31,7 @@ public:
     void subscribe(Args&&... args)
     {
         // 左折叠
-        (void)(..., args.addObserver(this));
+        (void)(..., args.getImpl()->addObserver(this));
 
         // or (c++17)支持
         // std::initializer_list<int> il = { (args.addObserver(this), 0)... };

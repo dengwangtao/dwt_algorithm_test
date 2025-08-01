@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "reactions/observer_node.h"
+#include "reactions/observer_graph.h"
 
 namespace reactions
 {
