@@ -23,9 +23,8 @@ public:
         return this->getValue();
     }
 
-
     template<typename T>
-        requires CanConvertConcept<T, Type> && IsVarExprConcept<ExprType>
+        requires (CanConvertConcept<T, Type> && IsVarExprConcept<ExprType> && !IsConstConcept<value_type>)
     void value(T &&value)
     {
         this->updateValue(std::forward<T>(value));
@@ -167,6 +166,18 @@ auto var(Type&& t)
 
     return React(impl_ptr);
 }
+
+
+template<typename Type>
+auto constVar(Type&& t)
+{
+    auto impl_ptr = std::make_shared<ReactImpl<const std::decay_t<Type>>>(std::forward<Type>(t));
+
+    ObserverGraph::Instance().addNode(impl_ptr);
+
+    return React(impl_ptr);
+}
+
 
 template<typename Func, typename... Args>
 auto calc(Func&& func, Args&&... args)

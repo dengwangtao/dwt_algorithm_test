@@ -21,6 +21,10 @@ concept IsVarExprConcept = std::is_same_v<ExprType, VarExprTag>;
 
 
 
+// 是否为const
+template<typename T>
+concept IsConstConcept = std::is_const_v<T>;
+
 
 } // namespace reactions
 

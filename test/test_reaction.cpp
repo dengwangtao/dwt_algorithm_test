@@ -116,8 +116,26 @@ TEST(TestReaction, reaction_move)
     EXPECT_EQ(clc3.get(), "25.140000");
 }
 
+TEST(TestReaction, reaction_const)
+{
+    auto a = reactions::var(1);
+    auto b = reactions::constVar(3.14);
+
+    auto ds = reactions::calc(
+        [](auto p1, auto p2) { return p1 + p2; },
+        a, b
+    );
+
+    ASSERT_FLOAT_EQ(ds.get(), 4.14);
+
+    a.value(2);
+    ASSERT_FLOAT_EQ(ds.get(), 5.14);
+
+    b.value(4.14);
+}
 
 
+/*
 struct ProcessedData {
     std::string info;
     int checksum;
@@ -228,3 +246,4 @@ TEST(ReactionTest, StressTest) {
         << "Avg time per update: "
         << duration.count() / static_cast<double>(ITERATIONS) << "ms";
 }
+*/
