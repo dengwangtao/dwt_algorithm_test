@@ -64,7 +64,10 @@ public:
         , func_(std::forward<F>(f))
         , args_(std::forward<As>(args)...)
     {
-        this->subscribe(std::forward<Args>(args)...);
+        this->subscribe(
+            [this](){ this->valueChanged(); },
+            std::forward<Args>(args)...
+        );
         
         evaluate();
     }
@@ -81,7 +84,7 @@ private:
         this->updateValue(result);
     }
 
-    void valueChanged() override
+    void valueChanged()
     {
         this->evaluate();
         this->notify();
