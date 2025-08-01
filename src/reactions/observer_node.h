@@ -18,7 +18,10 @@ public:
     virtual ~ObserverNode() = default;
 
     // event
-    virtual void valueChanged() {};
+    virtual void valueChanged()
+    {
+        this->notify();
+    }
 
     void addObserver(ObserverNode* observer)
     {

@@ -160,6 +160,62 @@ TEST(TestReaction, reaction_action)
 }
 
 
+
+
+
+
+
+
+
+class Person : public reactions::FieldBase
+{
+public:
+    Person(const std::string& name, int age, int gender)
+        : name_(field(name)), age_(field(age)), gender_(gender)
+    {
+    }
+
+    const std::string& getName() const
+    {
+        return name_.get();
+    }
+    void setName(const std::string& name) { *name_ = name; }
+
+    int getAge() const { return age_.get(); }
+    void setAge(int age) { age_.value(age); }
+
+
+private:
+    reactions::Field<std::string> name_;
+    reactions::Field<int> age_;
+    int gender_;
+
+};
+
+
+
+TEST(TestReaction, reaction_field)
+{
+    Person person("Tom", 10, 1);
+    auto p = reactions::var(person);
+    auto a = reactions::var(1);
+    auto ds = reactions::calc(
+        [](auto p1, auto p2) { return p1.getName() + std::to_string(p2); },
+        p, a
+    );
+
+    EXPECT_EQ(ds.get(), "Tom1");
+
+    p.get().setName("Jerry");
+    EXPECT_EQ(ds.get(), "Jerry1");
+
+    a.value(10);
+    EXPECT_EQ(ds.get(), "Jerry10");
+}
+
+
+
+
 /*
 struct ProcessedData {
     std::string info;

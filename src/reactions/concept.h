@@ -2,6 +2,7 @@
 
 #include <concepts>
 
+#include "reactions/tools.h"
 
 // concepts
 namespace reactions
@@ -55,6 +56,15 @@ concept IsDataReactConcept = requires(T t)
     requires (!IsVoidConcept<typename T::value_type>); // value_type不是void
 };
 
+
+class FieldBase;
+
+template<typename T>
+concept HasFieldConcept = requires(T t)
+{
+    requires std::is_base_of_v<FieldBase, std::decay_t<T>>;
+    {t.id()} -> std::same_as<UniqueId::IdType>;
+};
 
 } // namespace reactions
 

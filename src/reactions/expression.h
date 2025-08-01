@@ -63,7 +63,8 @@ private:
     void valueChanged() override
     {
         this->evaluate();
-        this->notify();
+        // this->notify();
+        SuperClass::valueChanged();
     }
 
 
