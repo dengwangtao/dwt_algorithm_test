@@ -186,6 +186,28 @@ TEST(TestReaction, reaction_action2)
     EXPECT_TRUE(triggered);
 }
 
+TEST(TestReaction, reaction_reset)
+{
+    auto a = reactions::var(1);
+    auto b = reactions::var(2);
+
+    auto ds = reactions::calc(
+        [](auto p1, auto p2) { return p1 + p2; },
+        a, b
+    );
+
+    auto ds2 = reactions::calc([](auto a, auto b) { return a + b; }, a, b);
+
+    EXPECT_EQ(ds.get(), 3);
+    EXPECT_EQ(ds2.get(), 3);
+
+    ds2.reset([](auto a, auto b, auto c) { return a + b + c; }, a, ds, b);
+
+    EXPECT_EQ(ds2.get(), 6);
+
+    a.value(10);
+    EXPECT_EQ(ds2.get(), 24);
+}
 
 
 

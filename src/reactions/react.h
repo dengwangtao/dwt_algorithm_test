@@ -45,6 +45,12 @@ public:
         return this->getRawPtr();
     }
 
+    template<typename F, typename... As>
+    void set(F &&f, As &&...args)
+    {
+        this->setSource(std::forward<F>(f), std::forward<As>(args)...);
+    }
+
 
     void addWeakRef()
     {
@@ -168,6 +174,11 @@ public:
         return getImpl()->get();
     }
 
+    template<typename F, typename... As>
+    void reset(F&& f, As&&... args)
+    {
+        getImpl()->set(std::forward<F>(f), std::forward<As>(args)...);
+    }
         
     void value(auto&& value)
         requires (IsDataReactConcept<ReactType>)
