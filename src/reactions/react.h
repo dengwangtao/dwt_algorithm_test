@@ -163,7 +163,7 @@ public:
     }
 
     decltype(auto) get() const
-        requires (IsDataReactConcept<ReactType>)
+        // requires (IsDataReactConcept<ReactType>)
     {
         return getImpl()->get();
     }

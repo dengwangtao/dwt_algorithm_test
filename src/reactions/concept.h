@@ -16,6 +16,9 @@ concept CanConvertConcept = std::is_convertible_v<std::decay_t<T>, std::decay_t<
 // 前向声明
 struct VarExprTag;
 struct CalcExprTag;
+struct VoidWrapper;
+
+
 // 是否是VarExpr
 template<typename ExprType>
 concept IsVarExprConcept = std::is_same_v<ExprType, VarExprTag>;
@@ -29,7 +32,7 @@ concept IsConstConcept = std::is_const_v<T>;
 
 // 是否为void
 template<typename T>
-concept IsVoidConcept = std::is_void_v<T>;
+concept IsVoidConcept = std::is_void_v<T> || std::is_same_v<T, VoidWrapper>;
 
 
 
@@ -83,6 +86,8 @@ class React;
 
 
 
+
+
 template<typename T>
 struct ExpressionTraits
 {
@@ -99,8 +104,11 @@ struct ExpressionTraits<React<ReactImpl<T>>>
 template<typename Func, typename... Args>
 struct ExpressionTraits<React<ReactImpl<Func, Args ...>>>
 {
-    using type = std::invoke_result_t<Func, typename ExpressionTraits<Args>::type...>;
+    using _type = std::invoke_result_t<Func, typename ExpressionTraits<Args>::type...>;
+    using type = std::conditional_t<std::is_void_v<_type>, VoidWrapper, _type>;
 };
+
+
 
 template<typename T, typename... Args>
 using ReturnType = typename ExpressionTraits<React<ReactImpl<T, Args...>>>::type;

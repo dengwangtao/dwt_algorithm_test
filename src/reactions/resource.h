@@ -54,16 +54,33 @@ private:
 };
 
 
+// template<>
+// class Resource<void> : public ObserverNode
+// {
+// public:
+
+//     Resource() = default;
+//     Resource(const Resource &other) = delete;
+//     Resource& operator=(const Resource &other) = delete;
+// };
+
+
+struct VoidWrapper {};
+
 template<>
-class Resource<void> : public ObserverNode
+class Resource<VoidWrapper> : public ObserverNode
 {
 public:
 
     Resource() = default;
     Resource(const Resource &other) = delete;
     Resource& operator=(const Resource &other) = delete;
-};
 
+    VoidWrapper getValue() const
+    {
+        return {};
+    }
+};
 
 
 } // namespace reactions

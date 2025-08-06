@@ -160,7 +160,31 @@ TEST(TestReaction, reaction_action)
 }
 
 
+TEST(TestReaction, reaction_action2)
+{
+    auto a = reactions::var(1);
+    auto b = reactions::var(3.14);
 
+    auto ds = reactions::calc(
+        [](auto p1, auto p2) { return p1 + p2; },
+        a, b
+    );
+
+    auto ac = reactions::action(
+        [&](auto p1, auto p2) { GTEST_LOG_(INFO) << p1 << " " << p2 << " changed"; },
+        a, b
+    );
+
+    bool triggered = false;
+    auto ac2 = reactions::action(
+        [&](auto) { triggered = true; GTEST_LOG_(INFO) << " ac2 triggered"; },
+        ac
+    );
+
+    a.value(2);
+
+    EXPECT_TRUE(triggered);
+}
 
 
 
