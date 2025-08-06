@@ -206,7 +206,8 @@ TEST(TestReaction, reaction_field)
 
     EXPECT_EQ(ds.get(), "Tom1");
 
-    p.get().setName("Jerry");
+    // p.get().setName("Jerry");
+    p->setName("Jerry");
     EXPECT_EQ(ds.get(), "Jerry1");
 
     a.value(10);

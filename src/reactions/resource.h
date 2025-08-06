@@ -43,6 +43,11 @@ public:
         *value_ = std::forward<T>(value);
     }
 
+    value_type* getRawPtr() const
+    {
+        return value_.get();
+    }
+
 private:
 
     std::unique_ptr<value_type> value_;

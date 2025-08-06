@@ -40,6 +40,11 @@ public:
         return *this;
     }
 
+    decltype(auto) getRaw() const
+    {
+        return this->getRawPtr();
+    }
+
 
     void addWeakRef()
     {
@@ -150,6 +155,11 @@ public:
     ReactType& operator*() const
     {
         return *getImpl();
+    }
+
+    decltype(auto) operator->() const
+    {
+        return getImpl()->getRaw();
     }
 
     decltype(auto) get() const
